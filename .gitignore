@@ -2,3 +2,5 @@
 *.gif
 .ipynb_checkpoints/
 *.ipynb
+*.txt
+Lecturas/

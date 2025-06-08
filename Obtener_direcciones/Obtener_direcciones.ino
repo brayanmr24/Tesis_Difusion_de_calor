@@ -1,12 +1,12 @@
 #include <OneWire.h>
-int bus=2;
+const int oneWireBus = 21;
 int i;
 byte direcciones[8];
 
-OneWire primero(bus);
+OneWire primero(oneWireBus);
 
 void setup(void) {
-  Serial.begin(9600);
+  Serial.begin(19200);
 }
 
 void loop(void) {

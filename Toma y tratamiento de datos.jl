@@ -1,12 +1,8 @@
 function toma_de_medidas(duracion)
-    historial = []
     for i ∈ 1:duracion
         datos = String(read(info_serial))
         push!(historial,datos)
         sleep(5)
-    end
-    for i ∈ historial
-        x=x*i
     end
 end
 

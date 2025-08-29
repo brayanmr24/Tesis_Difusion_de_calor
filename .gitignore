@@ -1,6 +1,12 @@
 *.csv
 *.gif
 .ipynb_checkpoints/
-*.ipynb
 *.txt
 Lecturas/
+*.gz
+*.toc
+*.pdf
+*.fls
+*.fdb_latexmk
+*.aux
+*.log

@@ -45,6 +45,12 @@ De esta manera, tenemos un concepto claro de temperatura y calor, así como de d
 
 Para encontrar una ecuación que pueda modelar la transferencia de calor iniciaremos en el caso de una dimensión, es decir, supondremos que el calor se transmite en una única dirección. Para esto consideremos una barra conductora de calor en la cual hay un gradiente de temperatura. Para que se cumpla la condición de que el calor fluya en una sola dirección, tomaremos en cuenta que la superficie lateral de la barra esta completamente aislada. Además de esto, para simplificar el desarrollo de la expresión que buscamos, se supondrá que la barra tiene una densidad uniforme así como un calor especifico constante (lo cual es una buena aproximación en algunos intervalos de temperatura según el material que se maneje). \\
 
+\begin{center}
+    \includegraphics[width=1\linewidth]{Barra.png}
+\end{center}
+
+\newpage
+
 Definimos $\phi$ como el flujo de energía térmica, es decir, la energía en forma de calor que fluye por la barra por unidad de tiempo y por unidad de área. Este flujo depende tanto de la posición de la barra como del tiempo en el que se mida, por lo que $\phi(x,t)$ es una función tanto del espacio (en este caso en la dirección $x$) como del tiempo. Si tomamos en cuenta una sección transversal de la barra con grosor $\Delta x$ podemos ver que, por conservación de la energía, el cambio en la calor en el punto $x$ depende de cuánta energía entra y cuánta energía sale, lo que nos lleva a la expresión:
 
 \begin{align}
@@ -146,6 +152,10 @@ como esta integral debe ser cero para cualquier región cerrada $R$, se deduce e
     \rho c\frac{\partial T}{\partial t} = - \nabla \cdot\vec{\phi}
 \end{align}
 
+\begin{center}
+    \includegraphics[width=1\linewidth]{Region_R.png}
+\end{center}
+
 Si queremos simplificar aún más esta expresión es necesario utilizar la ley de Fourier para el caso tridimensional, dada por la ecuación:
 
 \begin{align}
@@ -158,7 +168,7 @@ donde se sustituye a la parcial con respecto del tiempo por el gradiente, lo que
     \frac{\partial T}{\partial t} = \kappa \nabla^2 T
 \end{align}
 
-donde $\nabla^2$ es el operador Laplaciano y $\kappa$ es la misma difusiva térmica definida para el caso unidimensional.
+donde $\nabla^2$ es el operador Laplaciano y $\kappa$ es la misma difusividad térmica definida para el caso unidimensional.
 
 \subsubsection{Ecuaciones diferenciales parciales}
 
@@ -466,6 +476,10 @@ para la cual supondremos que el paso en el espacio $h_x$ es proporcional al paso
     \kappa[T(x+h_x,t) + T(x-h_x,t)] - [2\kappa + \alpha^2 h]T(x,t) = -\alpha^2 h T(x,t-h)
 \end{align*}
 
+\begin{center}
+    \includegraphics[width=1\linewidth]{Division.png}
+\end{center}
+
 De esta manera, si tomamos el i-esimo elemento de la partición realizada a la barra, esta tiene una temperatura que depende del número de paso de tiempo en el que nos encontremos. Si estamos en el j-esimo paso de tiempo, entonces podemos reescribir la notación para la función de temperatura como $T(x,t) = T_i^j$, donde $i$ representa a su posición en el espacio, mientras que $j$ representa su posición en el tiempo, con lo cual podemos escribir la ecuación anterior de la siguiente forma:
 
 \begin{align}
@@ -494,9 +508,63 @@ mientras que, si se tienen condiciones de frontera de tipo Neumann, y consideran
 
 De esta manera, al resolver el sistema de $n-2$ ecuaciones dadas por la expresión (25) junto con dos ecuaciones obtenidas de las condiciones de frontera (ya sea (26) o (27)), podemos obtener todos los valores de $T_i^j$ para todo $i \in \{1,2,3,4,...,n-1,n\}$ lo que se traduce en conocer la temperatura de la barra en cualquier punto de esta para el paso de tiempo $j$. Si ahora queremos saber qué pasa con la barra en el siguiente paso de tiempo, simplemente hay que repetir este procedimiento con la información de la temperatura de la barra obtenida en el paso anterior. Todo este desarrollo nos permite conocer la temperatura de la barra en cualquier punto y en cualquier instante del tiempo al resolver un sistema de ecuaciones lineales. \\
 
+Veamos ahora cómo se compara la solución numérica utilizando el método de diferencias finitas con la solución analítica para la ecuación del calor en una dimensión. Para esto consideraremos una barra con una longitud de $2 \; m$ y una distribución de temperatura dada por la función $f(x) = -x^2 + 2x$ donde $x$ se mide en metros y la temperatura en Kelvin. Las figuras 4-9 muestran la evolución del sistema en diferentes tiempos considerando condiciones de Dirichlet, es decir, los extremos de la barra siempre tienen una temperatura constante (en este caso $295 \; K$). Además. para este problema se tomó en cuenta un valor de $\kappa = 1.5 \times 10^{-4}$ para la difusividad térmica, valor cercano al del aluminio a temperatura ambiente. \\
 
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_01_t_0.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_01_t_1.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_01_t_2.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_01_t_3.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_01_t_4.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_01_t_6.png}
+\end{center}
+
+Por otro lado, las figuras 10-16 muestran la evolución temporal del mismo sistema, esta vez considerando condiciones de frontera de Neumann, lo que significa que los extremos de la barra no permiten el flujo de calor hacia el exterior.
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_02_t_0.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_02_t_1.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_02_t_2.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_02_t_3.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_02_t_4.png}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Ejemplo_02_t_6.png}
+\end{center}
 
 Si ahora queremos aplicar este método a dos dimensiones 
+
+\begin{center}
+    \includegraphics[width=1\linewidth]{Placa.png}
+\end{center}
 
 \subsection{Objetivos}
 \subsection{Hipótesis}

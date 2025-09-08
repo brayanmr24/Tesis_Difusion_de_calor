@@ -3,8 +3,9 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage[margin=2.5cm]{geometry}
-\usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{float}
+\usepackage{caption}
 
 \title{Difusión de calor}
 \author{Brayan Matias Rojo}
@@ -45,9 +46,12 @@ De esta manera, tenemos un concepto claro de temperatura y calor, así como de d
 
 Para encontrar una ecuación que pueda modelar la transferencia de calor iniciaremos en el caso de una dimensión, es decir, supondremos que el calor se transmite en una única dirección. Para esto consideremos una barra conductora de calor en la cual hay un gradiente de temperatura. Para que se cumpla la condición de que el calor fluya en una sola dirección, tomaremos en cuenta que la superficie lateral de la barra esta completamente aislada. Además de esto, para simplificar el desarrollo de la expresión que buscamos, se supondrá que la barra tiene una densidad uniforme así como un calor especifico constante (lo cual es una buena aproximación en algunos intervalos de temperatura según el material que se maneje). \\
 
+\begin{figure}[H]
 \begin{center}
     \includegraphics[width=1\linewidth]{Barra.png}
+    \caption{Diagrama del flujo de calor en un elemento diferencial de una barra conductora de calor.}
 \end{center}
+\end{figure}
 
 \newpage
 
@@ -152,9 +156,12 @@ como esta integral debe ser cero para cualquier región cerrada $R$, se deduce e
     \rho c\frac{\partial T}{\partial t} = - \nabla \cdot\vec{\phi}
 \end{align}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Region_R.png}
+    \includegraphics[width=0.8\linewidth]{Region_R.png}
+    \caption{Componente normal del flujo de calor en una región cerrada.}
 \end{center}
+\end{figure}
 
 Si queremos simplificar aún más esta expresión es necesario utilizar la ley de Fourier para el caso tridimensional, dada por la ecuación:
 
@@ -476,9 +483,12 @@ para la cual supondremos que el paso en el espacio $h_x$ es proporcional al paso
     \kappa[T(x+h_x,t) + T(x-h_x,t)] - [2\kappa + \alpha^2 h]T(x,t) = -\alpha^2 h T(x,t-h)
 \end{align*}
 
+\begin{figure}[H]
 \begin{center}
     \includegraphics[width=1\linewidth]{Division.png}
+    \caption{División de la barra conductora de calor con los elementos $T_i^j$ asociados.}
 \end{center}
+\end{figure}
 
 De esta manera, si tomamos el i-esimo elemento de la partición realizada a la barra, esta tiene una temperatura que depende del número de paso de tiempo en el que nos encontremos. Si estamos en el j-esimo paso de tiempo, entonces podemos reescribir la notación para la función de temperatura como $T(x,t) = T_i^j$, donde $i$ representa a su posición en el espacio, mientras que $j$ representa su posición en el tiempo, con lo cual podemos escribir la ecuación anterior de la siguiente forma:
 
@@ -508,63 +518,144 @@ mientras que, si se tienen condiciones de frontera de tipo Neumann, y consideran
 
 De esta manera, al resolver el sistema de $n-2$ ecuaciones dadas por la expresión (25) junto con dos ecuaciones obtenidas de las condiciones de frontera (ya sea (26) o (27)), podemos obtener todos los valores de $T_i^j$ para todo $i \in \{1,2,3,4,...,n-1,n\}$ lo que se traduce en conocer la temperatura de la barra en cualquier punto de esta para el paso de tiempo $j$. Si ahora queremos saber qué pasa con la barra en el siguiente paso de tiempo, simplemente hay que repetir este procedimiento con la información de la temperatura de la barra obtenida en el paso anterior. Todo este desarrollo nos permite conocer la temperatura de la barra en cualquier punto y en cualquier instante del tiempo al resolver un sistema de ecuaciones lineales. \\
 
-Veamos ahora cómo se compara la solución numérica utilizando el método de diferencias finitas con la solución analítica para la ecuación del calor en una dimensión. Para esto consideraremos una barra con una longitud de $2 \; m$ y una distribución de temperatura dada por la función $f(x) = -x^2 + 2x$ donde $x$ se mide en metros y la temperatura en Kelvin. Las figuras 4-9 muestran la evolución del sistema en diferentes tiempos considerando condiciones de Dirichlet, es decir, los extremos de la barra siempre tienen una temperatura constante (en este caso $295 \; K$). Además. para este problema se tomó en cuenta un valor de $\kappa = 1.5 \times 10^{-4}$ para la difusividad térmica, valor cercano al del aluminio a temperatura ambiente. \\
+Veamos ahora cómo se compara la solución numérica utilizando el método de diferencias finitas con la solución analítica para la ecuación del calor en una dimensión. Para esto consideraremos una barra con una longitud de $2 \; m$ sujeto a la ecuación de calor en una dimensión, así como las siguientes condiciones:
 
+\begin{align}
+    \begin{cases}
+        T(x,0) = -x^2 + 2x \;\;\;\;\;\;\;\; \forall x \in [0,2]\\
+        T(0,t) = T(2,t) = 0 \;\;\;\;\;\; \forall t>0
+    \end{cases}
+\end{align}
+
+donde $x$ se mide en metros, $t$ en segundos y la temperatura en Kelvin. Las figuras 4-9 muestran la evolución del sistema en diferentes tiempos considerando condiciones de Dirichlet, es decir, los extremos de la barra siempre tienen una temperatura constante (en este caso $295 \; K$). Además, para este problema se tomó en cuenta un valor de $\kappa = 1.5 \times 10^{-4}$ para la difusividad térmica, valor cercano al del aluminio a temperatura ambiente. \\
+
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_01_t_0.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_01_t_0.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (28) en el tiempo $t=0 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_01_t_1.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_01_t_1.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (28) en el tiempo $t=1000 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_01_t_2.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_01_t_2.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (28) en el tiempo $t=2000 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_01_t_3.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_01_t_3.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (28) en el tiempo $t=4000 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_01_t_4.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_01_t_4.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (28) en el tiempo $t=6000 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_01_t_6.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_01_t_6.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (28) en el tiempo $t=10000 \; s$.}
 \end{center}
+\end{figure}
 
-Por otro lado, las figuras 10-16 muestran la evolución temporal del mismo sistema, esta vez considerando condiciones de frontera de Neumann, lo que significa que los extremos de la barra no permiten el flujo de calor hacia el exterior.
+Por otro lado, si consideramos el mismo sistema esta vez con condiciones de frontera de Neumann, lo que significa que los extremos de la barra no permiten el flujo de calor hacia el exterior, tenemos el siguiente conjunto de condiciones:
 
+\begin{align}
+    \begin{cases}
+        T(x,0) = -x^2 + 2x \;\;\;\;\;\;\;\; \forall x \in [0,2]\\
+        \frac{\partial T}{\partial x} \Big|_0 = \frac{\partial T}{\partial x} \Big|_2 = 0 \;\;\;\;\;\;\;\;\;\;\;\;\;\; \forall t>0
+    \end{cases}
+\end{align}
+
+En las figuras 10-15 se muestra el desarrollo temporal para este problema:
+
+
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_02_t_0.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_02_t_0.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (29) en el tiempo $t=0 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_02_t_1.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_02_t_1.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (29) en el tiempo $t=200 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_02_t_2.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_02_t_2.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (29) en el tiempo $t=500 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_02_t_3.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_02_t_3.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (29) en el tiempo $t=1000 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_02_t_4.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_02_t_4.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (29) en el tiempo $t=1500 \; s$.}
 \end{center}
+\end{figure}
 
+\begin{figure}[H]
 \begin{center}
-    \includegraphics[width=1\linewidth]{Ejemplo_02_t_6.png}
+    \includegraphics[width=0.79\linewidth]{Ejemplo_02_t_6.png}
+    \caption{Comparación entre la solución analítica (izquierda) y la solución numérica (derecha) a la ecuación de calor para las condiciones (29) en el tiempo $t=4000 \; s$.}
 \end{center}
+\end{figure}
 
-Si ahora queremos aplicar este método a dos dimensiones 
+Si ahora queremos aplicar este método a dos dimensiones, se repite el mismo procedimiento, considerando una cantidad de elementos $T_i^j$ mayor. Para ejemplificar esto, tomemos una placa rectangular cuyos lados miden $L_1$ y $L_2$ y la dividiremos en $m$ columnas y $n$ renglones. Para simplificar este problema supondremos que cada división es del mismo tamaño (tanto de renglones como de columnas) de esta manera, cada división mide $h_x = L_1/n = L_2/m$. \\
 
+La numeración de los elementos de temperatura se hace de izquierda a derecha y de arriba hacia abajo de tal manera que, para un elemento de tiempo dado $j$, las divisiones del primer renglón tienen temperaturas de $T_1^j$, $T_2^j$, ..., $T_m^j$ para el segundo renglón se tienen temperaturas $T_{m+1}^j$, $T_{m+2}^j$, ..., $T_{2m}^j$ y así sucesivamente hasta llegar al último renglón que tiene temperaturas $T_{m(n-1)+1}^j$, $T_{m(n-1)+2}^j$, ..., $T_{nm}^j$.
+
+\begin{figure}[H]
 \begin{center}
     \includegraphics[width=1\linewidth]{Placa.png}
+    \caption{Diagrama de una placa de dimensiones $L_1$ y $L_2$ con los elementos de temperatura $T_i^j$ en cada división.}
 \end{center}
+\end{figure}
+
+La ecuación del calor para este sistema es ahora:
+
+\begin{align*}
+    \frac{\partial T}{\partial t} = \kappa \frac{\partial^2 T}{\partial x^2} + \kappa \frac{\partial^2 T}{\partial y^2}
+\end{align*}
+
+Tomando las mismas aproximaciones para la derivada que en el caso de una dimensión:
+
+\begin{align*}
+    \frac{T(x,y,t)-T(x,y,t-h_t)}{h_t} = &\kappa \frac{T(x+h_x,y,t) - 2T(x,y,t) + T(x-h_x,y,t)}{h_x^2} \\
+    +&\kappa \frac{T(x,y+h_x,t) - 2T(x,y,t) + T(x,y-h_x,t)}{h_x^2}
+\end{align*}
+
+reordenando los términos con los elementos $T_i^j$ llegamos a la expresión:
+
+\begin{align}
+    \kappa T_{i+1}^j + \kappa T_{i-1}^j + \kappa T_{i-m} + \kappa T_{i+m} - [4\kappa + \alpha^2 h]T_i^j = -\alpha^2 h T_i^{j-1}
+\end{align}
+
+La ecuación (30) es valida para cualquier elemento $T_i^j$ que no pertenezca a la frontera de la placa y, al igual que en el caso de una dimensión, para que se tenga un sistema de ecuaciones con solución es necesario obtener el resto de ecuaciones de las condiciones de frontera. Podemos notar ademas que la temperatura en una de las divisiones de la placa depende de sus vecinos, que esta vez son los elementos $T_{i+1}^j$, $T_{i-1}^j$, $T_{i+m}^j$ y $T_{i-m}^j$. Así, al resolver este sistema de ecuaciones, podemos obtener la temperatura para cada división en un instante de tiempo dado $j$.
 
 \subsection{Objetivos}
 \subsection{Hipótesis}
